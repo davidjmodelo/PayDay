@@ -93,6 +93,37 @@
         </div>
     </main>
 
-    <script src="script.js"></script>
+    <!-- Firebase SDK -->
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+      import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } 
+        from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBaZLyGxJ94FJSlKNE8F0N3X-Eas4jNR28",
+        authDomain: "payday-379da.firebaseapp.com",
+        projectId: "payday-379da",
+        storageBucket: "payday-379da.firebasestorage.app",
+        messagingSenderId: "1052972331917",
+        appId: "1:1052972331917:web:c4a3f2f2c16e5e679143c4",
+        measurementId: "G-ECHW55F36E"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth = getAuth(app);
+
+      // Make them globally available for script.js
+      window.firebaseApp = app;
+      window.analytics = analytics;
+      window.auth = auth;
+    </script>
+
+    <!-- Main JS -->
+    <script src="script.js" type="module"></script>
 </body>
 </html>
