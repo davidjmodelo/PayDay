@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Picks - Pay Day</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .picks-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .picks-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .picks-header h1 {
+            color: #ff6b1a;
+            margin-bottom: 10px;
+        }
+
+        .picks-header p {
+            color: white;
+            font-size: 18px;
+        }
+
+        .chat-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-header {
+            text-align: center;
+            color: #ff6b1a;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ff6b1a;
+        }
+
+        .chat-header h2 {
+            margin-bottom: 5px;
+        }
+
+        .chat-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .chat-messages {
+            height: 450px;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            max-width: 80%;
+            word-wrap: break-word;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            background: #ff6b1a;
+            color: white;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .message.ai {
+            background: white;
+            color: #333;
+            border: 1px solid #ddd;
+            line-height: 1.6;
+        }
+
+        .message.system {
+            background: #f0f0f0;
+            color: #666;
+            text-align: center;
+            font-style: italic;
+            max-width: 100%;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid #ff6b1a;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input:focus {
+            border-color: #ff8c42;
+        }
+
+        .send-btn {
+            padding: 14px 35px;
+            background: #ff6b1a;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .send-btn:hover {
+            background: #ff8c42;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 26, 0.3);
+        }
+
+        .send-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: #ff6b1a;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .loading::after {
+            content: '...';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 5px;">
+                        <span class="logo-text">Pay Day</span>
+                        <span class="logo-dot">●</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="nav-center">
+                <ul class="nav-tabs">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="picks.html" class="nav-link active">Picks</a></li>
+                    <li><a href="timeline.html" class="nav-link">Timeline</a></li>
+                    <li><a href="about.html" class="nav-link">About Us</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-right">
+                <button class="btn btn-secondary" id="loginBtn">Log in</button>
+                <button class="btn btn-primary" id="signupBtn">Sign up</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="picks-container">
+            <div class="picks-header">
+                <h1>AI-Powered Picks & Predictions</h1>
+                <p>Get expert insights and betting advice powered by ChatGPT</p>
+            </div>
+
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h2>🤖 AI Sports Betting Assistant</h2>
+                    <p>Ask me anything about sports betting, player statistics, or game predictions</p>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message system">
+                        👋 Welcome! I'm your AI betting assistant. Ask me about:
+                        <br>• Game predictions and analysis
+                        <br>• Player statistics and performance
+                        <br>• Betting strategies and tips
+                        <br>• Responsible gambling advice
+                    </div>
+                </div>
+
+                <div class="loading" id="loading">
+                    AI is thinking
+                </div>
+
+                <div class="chat-input-container">
+                    <input 
+                        type="text" 
+                        class="chat-input" 
+                        id="chatInput" 
+                        placeholder="Ask about sports predictions, player stats, betting tips..."
+                    >
+                    <button class="send-btn" id="sendBtn">Send</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+      import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBaZLyGxJ94FJSlKNE8F0N3X-Eas4jNR28",
+        authDomain: "payday-379da.firebaseapp.com",
+        projectId: "payday-379da",
+        storageBucket: "payday-379da.firebasestorage.app",
+        messagingSenderId: "1052972331917",
+        appId: "1:1052972331917:web:c4a3f2f2c16e5e679143c4",
+        measurementId: "G-ECHW55F36E"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth = getAuth(app);
+
+      window.firebaseApp = app;
+      window.analytics = analytics;
+      window.auth = auth;
+    </script>
+
+    <script src="script.js" type="module"></script>
+    <script src="ai-chat.js"></script>
+</body>
+</html>
