@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline - Pay Day</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 5px;">
+                        <span class="logo-text">Pay Day</span>
+                        <span class="logo-dot">●</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="nav-center">
+                <ul class="nav-tabs">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <!-- <li><a href="picks.html" class="nav-link">Picks</a></li> -->
+                    <li><a href="timeline.html" class="nav-link active">Timeline</a></li>
+                    <li id="bettingNavItem"><a href="betting.html" class="nav-link">Betting</a></li>
+                    <li><a href="about.html" class="nav-link">About Us</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="account.html" class="nav-link" id="accountNavLink">Account</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-right">
+                <button class="btn btn-secondary" id="loginBtn">Log in</button>
+                <button class="btn btn-primary" id="signupBtn">Sign up</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="timeline-main">
+        <div class="timeline-container">
+            <!-- Left Sidebar - User Info & Suggested Users -->
+            <aside class="timeline-sidebar">
+                <div class="sidebar-card user-profile-card" id="userProfileCard">
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="sidebarAvatar">?</div>
+                        <div class="profile-info">
+                            <h3 id="sidebarUsername">Guest</h3>
+                            <p id="sidebarEmail">Sign in to post</p>
+                        </div>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <span class="stat-value" id="postsCount">0</span>
+                            <span class="stat-label">Posts</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" id="followersCount">0</span>
+                            <span class="stat-label">Followers</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" id="followingCount">0</span>
+                            <span class="stat-label">Following</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h4>Suggested Users</h4>
+                    <div id="suggestedUsers" class="suggested-users-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Feed -->
+            <div class="timeline-feed">
+                <!-- Post Creation Box (only visible when logged in) -->
+                <div class="create-post-card" id="createPostCard" style="display: none;">
+                    <div class="create-post-header">
+                        <div class="create-post-avatar" id="createPostAvatar">U</div>
+                        <textarea 
+                            id="postContent" 
+                            class="post-textarea" 
+                            placeholder="Share your picks, predictions, or thoughts..."
+                            maxlength="500"
+                        ></textarea>
+                    </div>
+                    
+                    <div class="create-post-media">
+                        <input type="text" id="postImageUrl" class="media-input" placeholder="Image URL (optional)">
+                        <input type="text" id="postVideoUrl" class="media-input" placeholder="Video link - YouTube/Vimeo (optional)">
+                    </div>
+
+                    <div class="create-post-footer">
+                        <div class="post-options">
+                            <label class="visibility-toggle">
+                                <input type="checkbox" id="postPublic" checked>
+                                <span>Public post</span>
+                            </label>
+                            <span class="char-count"><span id="charCount">0</span>/500</span>
+                        </div>
+                        <button class="btn btn-primary post-btn" id="submitPostBtn">Post</button>
+                    </div>
+                </div>
+
+                <!-- Guest Message -->
+                <div class="guest-message" id="guestMessage">
+                    <p>👋 Welcome to the Timeline! <a href="#" id="guestLoginLink">Sign in</a> to create posts and follow other users.</p>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <div class="search-input-wrapper">
+                        <span class="search-icon">🔍</span>
+                        <input 
+                            type="text" 
+                            id="searchInput" 
+                            class="search-input" 
+                            placeholder="Search posts and users..."
+                        >
+                        <button class="search-clear-btn" id="searchClearBtn" style="display: none;">×</button>
+                    </div>
+                    <div class="search-filters">
+                        <select id="searchType" class="search-filter-select">
+                            <option value="all">All</option>
+                            <option value="posts">Posts</option>
+                            <option value="users">Users</option>
+                        </select>
+                        <select id="searchDateFilter" class="search-filter-select">
+                            <option value="anytime">Any time</option>
+                            <option value="today">Today</option>
+                            <option value="week">This week</option>
+                            <option value="month">This month</option>
+                        </select>
+                        <button class="btn btn-primary search-btn" id="searchBtn">Search</button>
+                    </div>
+                </div>
+
+                <!-- Search Results (hidden by default) -->
+                <div class="search-results" id="searchResults" style="display: none;">
+                    <div class="search-results-header">
+                        <h3>Search Results <span id="searchResultsCount"></span></h3>
+                        <button class="btn btn-secondary" id="clearSearchBtn">Clear Search</button>
+                    </div>
+                    <div id="searchResultsContent"></div>
+                </div>
+
+                <!-- Feed Filter Tabs -->
+                <div class="feed-tabs" id="feedTabs">
+                    <button class="feed-tab active" data-feed="all">All Posts</button>
+                    <button class="feed-tab" data-feed="following">Following</button>
+                    <button class="feed-tab" data-feed="mine">My Posts</button>
+                </div>
+
+                <!-- Posts Feed -->
+                <div class="posts-feed" id="postsFeed">
+                    <div class="loading-posts" id="loadingPosts">
+                        <div class="spinner"></div>
+                        <p>Loading posts...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar - Trending -->
+            <aside class="timeline-sidebar timeline-sidebar-right">
+                <div class="sidebar-card">
+                    <h4>🔥 Trending Topics</h4>
+                    <div class="trending-list">
+                        <div class="trending-item">
+                            <span class="trending-tag">#NFLPlayoffs</span>
+                            <span class="trending-count">234 posts</span>
+                        </div>
+                        <div class="trending-item">
+                            <span class="trending-tag">#NBABets</span>
+                            <span class="trending-count">189 posts</span>
+                        </div>
+                        <div class="trending-item">
+                            <span class="trending-tag">#SuperBowl</span>
+                            <span class="trending-count">156 posts</span>
+                        </div>
+                        <div class="trending-item">
+                            <span class="trending-tag">#MarchMadness</span>
+                            <span class="trending-count">98 posts</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+      import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBaZLyGxJ94FJSlKNE8F0N3X-Eas4jNR28",
+        authDomain: "payday-379da.firebaseapp.com",
+        projectId: "payday-379da",
+        storageBucket: "payday-379da.firebasestorage.app",
+        messagingSenderId: "1052972331917",
+        appId: "1:1052972331917:web:c4a3f2f2c16e5e679143c4",
+        measurementId: "G-ECHW55F36E"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth = getAuth(app);
+
+      window.firebaseApp = app;
+      window.analytics = analytics;
+      window.auth = auth;
+    </script>
+
+    <script src="script.js" type="module"></script>
+    <script src="timeline.js" type="module"></script>
+</body>
+</html>

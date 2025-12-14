@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account - Pay Day</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 5px;">
+                        <span class="logo-text">Pay Day</span>
+                        <span class="logo-dot">●</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="nav-center">
+                <ul class="nav-tabs">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <!-- <li><a href="picks.html" class="nav-link">Picks</a></li> -->
+                    <li><a href="timeline.html" class="nav-link">Timeline</a></li>
+                    <li id="bettingNavItem"><a href="betting.html" class="nav-link">Betting</a></li>
+                    <li><a href="about.html" class="nav-link">About Us</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="account.html" class="nav-link active" id="accountNavLink">Account</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-right">
+                <button class="btn btn-secondary" id="loginBtn">Log in</button>
+                <button class="btn btn-primary" id="signupBtn">Sign up</button>
+            </div>
+        </nav>
+    </header>
+
+    <main style="padding: 40px 20px; max-width: 800px; margin: 0 auto;">
+        <h1 style="color: #ffffff; margin-bottom: 20px;">My Account</h1>
+        <div style="background: white; border-radius: 15px; padding: 24px; color: #333; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+            <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
+                <div id="profilePictureContainer" style="width:64px; height:64px; border-radius:50%; overflow:hidden; background:#e5e7eb; display:flex; align-items:center; justify-content:center; font-weight:bold; color:#6b7280; font-size:20px;">
+                    <img id="profilePicture" src="" alt="Profile" style="width:100%; height:100%; object-fit:cover; display:none;">
+                    <span id="profileInitials">U</span>
+                </div>
+                <h2 id="accountUsername" style="font-size: 22px; margin:0;">Username: User</h2>
+            </div>
+
+            <p id="accountEmail" style="margin-bottom: 10px; font-size: 14px; color: #555;">Email: </p>
+            <p id="accountBirthday" style="margin-bottom: 10px; font-size: 14px; color: #555;">Birthday: </p>
+            <p id="accountWallet" style="margin-bottom: 16px; font-size: 14px; color: #111827; font-weight:600;">Wallet Balance: $0.00</p>
+
+            <div style="margin-bottom: 16px;">
+                <label for="accountBio" style="display:block; font-size:14px; color:#555; margin-bottom:6px;">Bio:</label>
+                <textarea id="accountBio" rows="3" style="width:100%; padding:8px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; resize:vertical;" placeholder="Add a short bio about yourself..."></textarea>
+            </div>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px;">
+                <button class="btn" id="changeUsernameBtn" style="background-color:#ff6b1a;color:#ffffff;">Change Username</button>
+                <button class="btn" id="changeEmailBtn" style="background-color:#ff6b1a;color:#ffffff;">Change Email</button>
+                <button class="btn" id="changePasswordBtn" style="background-color:#ff6b1a;color:#ffffff;">Change Password</button>
+                <button class="btn" id="saveBioBtn" style="background-color:#ff6b1a;color:#ffffff;">Save Bio</button>
+                <button class="btn" id="addFundsBtn" style="background-color:#ff6b1a;color:#ffffff;">Add Funds</button>
+                <button class="btn" id="changePictureBtn" style="background-color:#ff6b1a;color:#ffffff;">Change Profile Picture</button>
+                <button class="btn" id="deleteAccountBtn" style="background-color:#b91c1c;color:#ffffff;">Delete Account</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+      import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBaZLyGxJ94FJSlKNE8F0N3X-Eas4jNR28",
+        authDomain: "payday-379da.firebaseapp.com",
+        projectId: "payday-379da",
+        storageBucket: "payday-379da.firebasestorage.app",
+        messagingSenderId: "1052972331917",
+        appId: "1:1052972331917:web:c4a3f2f2c16e5e679143c4",
+        measurementId: "G-ECHW55F36E"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth = getAuth(app);
+
+      window.firebaseApp = app;
+      window.analytics = analytics;
+      window.auth = auth;
+    </script>
+
+    <script src="script.js" type="module"></script>
+</body>
+</html>
