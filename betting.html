@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Betting Markets - Pay Day</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 5px;">
+                        <span class="logo-text">Pay Day</span>
+                        <span class="logo-dot">●</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="nav-center">
+                <ul class="nav-tabs">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <!-- <li><a href="picks.html" class="nav-link">Picks</a></li> -->
+                    <li><a href="timeline.html" class="nav-link">Timeline</a></li>
+                    <li id="bettingNavItem"><a href="betting.html" class="nav-link active">Betting</a></li>
+                    <li><a href="about.html" class="nav-link">About Us</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="account.html" class="nav-link" id="accountNavLink">Account</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-right">
+                <button class="btn btn-secondary" id="loginBtn">Log in</button>
+                <button class="btn btn-primary" id="signupBtn">Sign up</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="betting-main">
+        <div class="betting-container">
+            <!-- Left Section - Markets -->
+            <div class="markets-section">
+                <!-- Rob AI Chat Panel -->
+                <div class="rob-chat-panel">
+                    <div class="rob-chat-header">
+                        <div class="rob-avatar">🤖</div>
+                        <div class="rob-info">
+                            <h3>Rob - AI Betting Assistant</h3>
+                            <span class="rob-status">Online</span>
+                        </div>
+                        <button class="rob-toggle-btn" id="robToggleBtn">−</button>
+                    </div>
+                    <div class="rob-chat-body" id="robChatBody">
+                        <div class="rob-chat-messages" id="robChatMessages">
+                            <div class="rob-message">
+                                <div class="rob-message-avatar">🤖</div>
+                                <div class="rob-message-content">
+                                    <p>Hey! I'm Rob, your AI betting assistant. Ask me anything about betting or click below for my pick suggestions!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rob-suggestion-btns">
+                            <button class="btn btn-primary rob-pick-btn" id="robSinglePickBtn">
+                                🎯 Get Single Pick
+                            </button>
+                            <button class="btn btn-secondary rob-pick-btn" id="robParlayPickBtn">
+                                🎲 Get Parlay Pick
+                            </button>
+                        </div>
+                        <div class="rob-chat-input">
+                            <input type="text" id="robChatInput" placeholder="Ask Rob anything..." />
+                            <button class="rob-send-btn" id="robSendBtn">➤</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sport Filter Tabs -->
+                <div class="sport-tabs">
+                    <button class="sport-tab active" data-sport="all">All Sports</button>
+                    <button class="sport-tab" data-sport="nfl">🏈 NFL</button>
+                    <button class="sport-tab" data-sport="nba">🏀 NBA</button>
+                    <button class="sport-tab" data-sport="mlb">⚾ MLB</button>
+                    <button class="sport-tab" data-sport="nhl">🏒 NHL</button>
+                    <button class="sport-tab" data-sport="soccer">⚽ Soccer</button>
+                </div>
+
+                <!-- Team Statistics Panel (#22) -->
+                <div class="team-stats-panel" id="teamStatsPanel" style="display: none; background: white; border-radius: 12px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h4 style="margin: 0; color: #333;">📊 Team Statistics</h4>
+                        <button id="closeStatsBtn" style="background: none; border: none; font-size: 18px; cursor: pointer; color: #666;">×</button>
+                    </div>
+                    <div id="teamStatsList" style="max-height: 200px; overflow-y: auto;"></div>
+                </div>
+
+                <!-- Markets List -->
+                <div class="markets-list" id="marketsList">
+                    <div class="loading-markets" id="loadingMarkets">
+                        <div class="spinner"></div>
+                        <p>Loading markets...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Section - Bet Slip -->
+            <aside class="betslip-section">
+                <div class="betslip-card">
+                    <div class="betslip-header">
+                        <h3>🎫 Bet Slip</h3>
+                        <span class="betslip-count" id="betslipCount">0</span>
+                    </div>
+
+                    <!-- Bet Type Toggle -->
+                    <div class="bet-type-toggle">
+                        <button class="bet-type-btn active" data-type="single">Singles</button>
+                        <button class="bet-type-btn" data-type="parlay">Parlay</button>
+                    </div>
+
+                    <!-- Bet Slip Items -->
+                    <div class="betslip-items" id="betslipItems">
+                        <div class="betslip-empty" id="betslipEmpty">
+                            <p>Your bet slip is empty</p>
+                            <span>Click on odds to add selections</span>
+                        </div>
+                    </div>
+
+                    <!-- Parlay Summary (shown when parlay selected) -->
+                    <div class="parlay-summary" id="parlaySummary" style="display: none;">
+                        <div class="parlay-odds">
+                            <span>Combined Odds:</span>
+                            <strong id="parlayOdds">+100</strong>
+                        </div>
+                        <div class="parlay-stake">
+                            <label for="parlayStake">Stake ($):</label>
+                            <input type="number" id="parlayStake" min="1" max="10000" value="10" class="stake-input">
+                        </div>
+                        <div class="parlay-payout">
+                            <span>Potential Payout:</span>
+                            <strong id="parlayPayout">$0.00</strong>
+                        </div>
+                    </div>
+
+                    <!-- Place Bet Button -->
+                    <div class="betslip-footer">
+                        <div class="user-balance" id="userBalanceSection" style="display: none;">
+                            <span>Balance:</span>
+                            <strong id="userBalance">$0.00</strong>
+                        </div>
+                        <button class="btn btn-primary place-bet-btn" id="placeBetBtn" disabled>
+                            Place Bet
+                        </button>
+                        <button class="btn btn-secondary clear-slip-btn" id="clearSlipBtn">
+                            Clear Slip
+                        </button>
+                    </div>
+                </div>
+
+                <!-- My Bets Section -->
+                <div class="my-bets-card">
+                    <div class="my-bets-header">
+                        <h3>📋 My Bets</h3>
+                        <div class="my-bets-tabs">
+                            <button class="my-bets-tab active" data-status="open">Open</button>
+                            <button class="my-bets-tab" data-status="settled">Settled</button>
+                        </div>
+                    </div>
+                    <div class="my-bets-list" id="myBetsList">
+                        <p class="no-bets-message" id="noBetsMessage">No bets yet</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+      import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBaZLyGxJ94FJSlKNE8F0N3X-Eas4jNR28",
+        authDomain: "payday-379da.firebaseapp.com",
+        projectId: "payday-379da",
+        storageBucket: "payday-379da.firebasestorage.app",
+        messagingSenderId: "1052972331917",
+        appId: "1:1052972331917:web:c4a3f2f2c16e5e679143c4",
+        measurementId: "G-ECHW55F36E"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth = getAuth(app);
+
+      window.firebaseApp = app;
+      window.analytics = analytics;
+      window.auth = auth;
+    </script>
+
+    <script src="script.js" type="module"></script>
+    <script src="betting.js" type="module"></script>
+</body>
+</html>

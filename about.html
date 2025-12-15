@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Pay Day</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 5px;">
+                        <span class="logo-text">Pay Day</span>
+                        <span class="logo-dot">●</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="nav-center">
+                <ul class="nav-tabs">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <!-- <li><a href="picks.html" class="nav-link">Picks</a></li> -->
+                    <li><a href="timeline.html" class="nav-link">Timeline</a></li>
+                    <li id="bettingNavItem"><a href="betting.html" class="nav-link">Betting</a></li>
+                    <li><a href="about.html" class="nav-link active">About Us</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="account.html" class="nav-link" id="accountNavLink">Account</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-right">
+                <button class="btn btn-secondary" id="loginBtn">Log in</button>
+                <button class="btn btn-primary" id="signupBtn">Sign up</button>
+            </div>
+        </nav>
+    </header>
+
+    <main style="padding: 40px 20px; max-width: 1200px; margin: 0 auto;">
+        <h1 style="color: #ffffff; margin-bottom: 20px;">About Us</h1>
+        <p style="color: #666; font-size: 18px; line-height: 1.6;">
+            David Modelo and Leonel Noriega founded this platform by combining their shared passion for programming, artificial intelligence, and innovative product design. Their deep love for sports and data-driven analysis inspired them to create a smarter, more engaging way to experience player prop gambling.
+            <br><br>
+            Together, they built an app that merges cutting-edge AI with real-time sports insight to help users make more confident and informed picks. At Paday, our goal is to help users play smarter bets by giving them clearer, more meaningful information behind every pick. We aim to empower players with tools that make betting not just exciting, but strategic and informed.
+        </p>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+      import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBaZLyGxJ94FJSlKNE8F0N3X-Eas4jNR28",
+        authDomain: "payday-379da.firebaseapp.com",
+        projectId: "payday-379da",storageBucket: "payday-379da.firebasestorage.app",
+        messagingSenderId: "1052972331917",
+        appId: "1:1052972331917:web:c4a3f2f2c16e5e679143c4",
+        measurementId: "G-ECHW55F36E"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth = getAuth(app);
+
+      window.firebaseApp = app;
+      window.analytics = analytics;
+      window.auth = auth;
+    </script>
+
+    <script src="script.js" type="module"></script>
+</body>
+</html>

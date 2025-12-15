@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Pay Day</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .settings-main {
+            padding: 100px 20px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .settings-header {
+            margin-bottom: 30px;
+        }
+        .settings-header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .settings-header p {
+            color: #6b7280;
+        }
+        .settings-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .settings-section h2 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .settings-section h2 span {
+            font-size: 20px;
+        }
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+        .setting-info h4 {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        .setting-info p {
+            color: #6b7280;
+            font-size: 12px;
+        }
+        .setting-control {
+            min-width: 120px;
+            text-align: right;
+        }
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.3s;
+            border-radius: 26px;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+        input:checked + .toggle-slider {
+            background-color: #ff6b1a;
+        }
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+        /* Select Dropdown */
+        .setting-select {
+            padding: 8px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #333;
+            background: white;
+            cursor: pointer;
+            min-width: 140px;
+        }
+        .setting-select:focus {
+            outline: none;
+            border-color: #ff6b1a;
+        }
+        /* Number Input */
+        .setting-number {
+            padding: 8px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #333;
+            width: 80px;
+            text-align: center;
+        }
+        .setting-number:focus {
+            outline: none;
+            border-color: #ff6b1a;
+        }
+        /* Action Buttons */
+        .settings-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        .settings-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .settings-btn-primary {
+            background: #ff6b1a;
+            color: white;
+            border: none;
+        }
+        .settings-btn-primary:hover {
+            background: #e55a10;
+        }
+        .settings-btn-secondary {
+            background: white;
+            color: #333;
+            border: 1px solid #e5e7eb;
+        }
+        .settings-btn-secondary:hover {
+            background: #f9fafb;
+        }
+        .settings-btn-danger {
+            background: white;
+            color: #dc2626;
+            border: 1px solid #dc2626;
+        }
+        .settings-btn-danger:hover {
+            background: #fef2f2;
+        }
+        /* Save Status */
+        .save-status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: none;
+            z-index: 1000;
+        }
+        .save-status.success {
+            background: #059669;
+            color: white;
+        }
+        .save-status.error {
+            background: #dc2626;
+            color: white;
+        }
+        /* Loading State */
+        .settings-loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7280;
+        }
+        .settings-loading .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e5e7eb;
+            border-top-color: #ff6b1a;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        /* Not Logged In */
+        .not-logged-in {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .not-logged-in h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .not-logged-in p {
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 5px;">
+                        <span class="logo-text">Pay Day</span>
+                        <span class="logo-dot">●</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="nav-center">
+                <ul class="nav-tabs">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="timeline.html" class="nav-link">Timeline</a></li>
+                    <li id="bettingNavItem"><a href="betting.html" class="nav-link">Betting</a></li>
+                    <li><a href="about.html" class="nav-link">About Us</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="account.html" class="nav-link">Account</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-right">
+                <button class="btn btn-secondary" id="loginBtn">Log in</button>
+                <button class="btn btn-primary" id="signupBtn">Sign up</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="settings-main">
+        <div class="settings-header">
+            <h1>⚙️ Settings</h1>
+            <p>Manage your privacy, notifications, and preferences</p>
+        </div>
+
+        <div id="settingsContent">
+            <div class="settings-loading" id="settingsLoading">
+                <div class="spinner"></div>
+                <p>Loading settings...</p>
+            </div>
+        </div>
+
+        <div id="notLoggedIn" class="not-logged-in" style="display: none;">
+            <h2>Please Log In</h2>
+            <p>You need to be logged in to access your settings.</p>
+            <button class="btn btn-primary" id="loginPromptBtn">Log In</button>
+        </div>
+
+        <div id="settingsContainer" style="display: none;">
+            <!-- Privacy Settings -->
+            <section class="settings-section">
+                <h2><span>🔒</span> Privacy</h2>
+                
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Profile Visibility</h4>
+                        <p>Control who can see your profile</p>
+                    </div>
+                    <div class="setting-control">
+                        <select class="setting-select" id="profileVisibility" data-category="privacy" data-key="profileVisibility">
+                            <option value="public">Public</option>
+                            <option value="followers">Followers Only</option>
+                            <option value="private">Private</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Show Betting History</h4>
+                        <p>Allow others to see your betting activity</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="showBettingHistory" data-category="privacy" data-key="showBettingHistory">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Show Wallet Balance</h4>
+                        <p>Display your balance on your profile</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="showWalletBalance" data-category="privacy" data-key="showWalletBalance">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Allow Direct Messages</h4>
+                        <p>Who can send you messages</p>
+                    </div>
+                    <div class="setting-control">
+                        <select class="setting-select" id="allowDirectMessages" data-category="privacy" data-key="allowDirectMessages">
+                            <option value="everyone">Everyone</option>
+                            <option value="followers">Followers Only</option>
+                            <option value="nobody">Nobody</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Show Online Status</h4>
+                        <p>Let others see when you're online</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="showOnlineStatus" data-category="privacy" data-key="showOnlineStatus">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Show Activity Status</h4>
+                        <p>Show your recent activity to others</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="showActivityStatus" data-category="privacy" data-key="showActivityStatus">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Notification Settings -->
+            <section class="settings-section">
+                <h2><span>🔔</span> Notifications</h2>
+                
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Email Notifications</h4>
+                        <p>Receive notifications via email</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="emailNotifications" data-category="notifications" data-key="emailNotifications">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Bet Results</h4>
+                        <p>Get notified when your bets settle</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="betResults" data-category="notifications" data-key="betResults">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>New Followers</h4>
+                        <p>Get notified when someone follows you</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="newFollowers" data-category="notifications" data-key="newFollowers">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Direct Messages</h4>
+                        <p>Get notified for new messages</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="directMessages" data-category="notifications" data-key="directMessages">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Rob AI Suggestions</h4>
+                        <p>Get notified for new betting tips from Rob</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="robSuggestions" data-category="notifications" data-key="robSuggestions">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Promotions</h4>
+                        <p>Receive promotional offers and updates</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="promotions" data-category="notifications" data-key="promotions">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Weekly Digest</h4>
+                        <p>Receive a weekly summary of your activity</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="weeklyDigest" data-category="notifications" data-key="weeklyDigest">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Display Settings -->
+            <section class="settings-section">
+                <h2><span>🎨</span> Display</h2>
+                
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Theme</h4>
+                        <p>Choose your preferred color theme</p>
+                    </div>
+                    <div class="setting-control">
+                        <select class="setting-select" id="theme" data-category="display" data-key="theme">
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                            <option value="auto">Auto (System)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Odds Format</h4>
+                        <p>How betting odds are displayed</p>
+                    </div>
+                    <div class="setting-control">
+                        <select class="setting-select" id="oddsFormat" data-category="display" data-key="oddsFormat">
+                            <option value="american">American (+150, -110)</option>
+                            <option value="decimal">Decimal (2.50, 1.91)</option>
+                            <option value="fractional">Fractional (3/2, 10/11)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Timezone</h4>
+                        <p>Your local timezone for event times</p>
+                    </div>
+                    <div class="setting-control">
+                        <select class="setting-select" id="timezone" data-category="display" data-key="timezone">
+                            <option value="America/Los_Angeles">Pacific Time (PT)</option>
+                            <option value="America/Denver">Mountain Time (MT)</option>
+                            <option value="America/Chicago">Central Time (CT)</option>
+                            <option value="America/New_York">Eastern Time (ET)</option>
+                            <option value="Europe/London">London (GMT)</option>
+                            <option value="Europe/Paris">Paris (CET)</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Betting Preferences -->
+            <section class="settings-section">
+                <h2><span>🎲</span> Betting Preferences</h2>
+                
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Default Stake</h4>
+                        <p>Pre-fill this amount when placing bets</p>
+                    </div>
+                    <div class="setting-control">
+                        <input type="number" class="setting-number" id="defaultStake" data-category="betting" data-key="defaultStake" min="1" max="1000" step="1">
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Confirm Bets</h4>
+                        <p>Show confirmation before placing bets</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="confirmBets" data-category="betting" data-key="confirmBets">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Show Odds Changes</h4>
+                        <p>Highlight when odds change in your bet slip</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="showOddsChanges" data-category="betting" data-key="showOddsChanges">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4>Auto-Accept Odds Changes</h4>
+                        <p>Automatically accept odds changes when placing bets</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="autoAcceptOddsChanges" data-category="betting" data-key="autoAcceptOddsChanges">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Action Buttons -->
+            <div class="settings-actions">
+                <button class="settings-btn settings-btn-primary" id="saveSettingsBtn">Save Changes</button>
+                <button class="settings-btn settings-btn-secondary" id="resetSettingsBtn">Reset to Defaults</button>
+                <button class="settings-btn settings-btn-secondary" id="exportDataBtn">Export My Data</button>
+                <a href="account.html" class="settings-btn settings-btn-secondary" style="text-decoration: none;">Back to Account</a>
+            </div>
+        </div>
+
+        <div class="save-status" id="saveStatus"></div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+      import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBaZLyGxJ94FJSlKNE8F0N3X-Eas4jNR28",
+        authDomain: "payday-379da.firebaseapp.com",
+        projectId: "payday-379da",
+        storageBucket: "payday-379da.firebasestorage.app",
+        messagingSenderId: "1052972331917",
+        appId: "1:1052972331917:web:c4a3f2f2c16e5e679143c4",
+        measurementId: "G-ECHW55F36E"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth = getAuth(app);
+
+      window.firebaseApp = app;
+      window.analytics = analytics;
+      window.auth = auth;
+    </script>
+
+    <script type="module" src="settings.js"></script>
+</body>
+</html>
