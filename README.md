@@ -120,9 +120,9 @@ The platform is built as a senior capstone project at California State Universit
    
    Create a `.env` file in the project root:
    ```env
-   MONGODB_URI=your_mongodb_connection_string
-   OPENAI_API_KEY=your_openai_api_key
-   ODDS_API_KEY=your_odds_api_key
+   MONGODB_URI=mongodb+srv://LeBron:daGoat123!@payday-cluster.vaalrmf.mongodb.net/payday?retryWrites=true&w=majority
+   OPENAI_API_KEY=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
+   ODDS_API_KEY=2581a9656cc40b1f0b48fbbb56c989e2
    ```
 
 4. **Start the development server**
@@ -167,6 +167,8 @@ This project was developed as part of an academic senior project and is intended
 ---
 
 ## Contributors
+David Modelo
+Leonel Noriega-Rojas
 
 **Senior Project Team**  
 California State University, Fullerton
