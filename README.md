@@ -120,9 +120,9 @@ The platform is built as a senior capstone project at California State Universit
    
    Create a `.env` file in the project root:
    ```env
-   MONGODB_URI=mongodb+srv://LeBron:daGoat123!@payday-cluster.vaalrmf.mongodb.net/payday?retryWrites=true&w=majority
-   OPENAI_API_KEY=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
-   ODDS_API_KEY=2581a9656cc40b1f0b48fbbb56c989e2
+   MONGODB_URI=YOUR-MONGODB-KEY
+   OPENAI_API_KEY=YOUR-API-KEY
+   ODDS_API_KEY=ODDS-API-KEY
    ```
 
 4. **Start the development server**
