@@ -107,7 +107,7 @@ The platform is built as a senior capstone project at California State Universit
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/davidjmodelo/PayDay.git
    cd daproject
    ```
 
