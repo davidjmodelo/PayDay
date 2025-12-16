@@ -1,185 +1,172 @@
-# Pay Day - Social Sports Betting Platform
+# Pay Day
 
-## Overview
-Pay Day is a full-stack social sports betting web application that combines real-time betting markets, social features, and an AI-powered betting assistant called "Rob". The platform features Firebase authentication, MongoDB data persistence, real-time odds from The Odds API, and a modern responsive design.
+**A Social Sports Betting Platform with AI-Powered Insights**
 
-## 🚀 Features
+Pay Day is a full-stack web application that combines real-time sports betting markets with social networking features. The platform integrates an AI assistant named "Rob" that provides data-driven betting suggestions and conversational guidance to users.
 
-### User Management (#1-6)
-- user signup/login with email and password (firebase auth)
-- profile management (username, bio, photo)
-- follow/unfollow other users
-- change email/password
-- delete account with full data purge
-- password reset via email token
+---
 
-### Betting System (#7-10, #17)
-- view betting markets with real-time odds
-- place single bets
-- place parlay bets (multi-selection)
-- cancel pending bets (before market closes)
-- automated bet settlement with simulated outcomes
+## About
 
-### Live Streaming (#11)
-- embedded youtube sports streams
-- multiple sport channels (nfl, nba, soccer, nhl)
-- simulated live viewer counts
+Pay Day delivers a modern sports betting experience by merging three core components:
 
-### Virtual Wallet (#12-13)
-- deposit funds to wallet
-- withdrawal requests (simulated processing)
-- transaction history
+1. **Real-Time Betting** — Live odds from professional sports leagues with support for single and parlay wagers
+2. **Social Networking** — A community-driven feed where users share picks, follow bettors, and engage through posts and direct messaging
+3. **AI Assistance** — An intelligent assistant powered by OpenAI that analyzes markets and provides betting recommendations with confidence ratings
 
-### Social Features (#14-16, #20, #23)
-- create posts with text, images, and video
-- like and comment on posts
-- share posts
-- search users and posts
-- direct messaging between users
+The platform is built as a senior capstone project at California State University, Fullerton, demonstrating full-stack development with modern web technologies and third-party API integrations.
 
-### AI Features (#18-19)
-- rob ai betting suggestions with confidence ratings
-- rob ai chat assistant for betting advice
-- ai-powered pick analysis using openai
+---
 
-### Statistics & Data (#21-22, #26)
-- transaction history
-- player/team statistics display
-- real-time odds from the odds api
+## Key Features
 
-### Settings & Admin (#24, #27-28)
-- full settings page (privacy, notifications, display, betting preferences)
-- admin moderation panel with login
-- help pages, legal disclaimers, age verification
+### Betting Platform
+- Browse betting markets across NFL, NBA, MLB, NHL, and MLS with real-time odds
+- Place single bets or combine selections into parlay wagers
+- Cancel pending bets before market close
+- Automated settlement system with payout processing
 
-## 📁 Project Structure
+### Rob AI Assistant
+- Conversational chat interface for betting advice and questions
+- AI-generated pick suggestions with confidence scores and reasoning
+- Context-aware responses using live market data
+- 10% fee structure on AI-assisted winning bets
+
+### Social Experience
+- Create posts with text, images, and video content
+- Follow other users and curate a personalized feed
+- Like, comment, and share posts within the community
+- Private direct messaging between users
+- Search functionality for discovering users and content
+
+### Account Management
+- Secure authentication via Firebase
+- Virtual wallet with deposit and withdrawal capabilities
+- Comprehensive transaction history
+- Customizable privacy, notification, and display settings
+- Full GDPR-compliant data export and account deletion
+
+### Administration
+- Moderation panel for platform oversight
+- Manual bet settlement controls
+- User and content management tools
+- Reported message review system
+
+---
+
+## Technology Stack
+
+| Layer | Technologies |
+|-------|--------------|
+| **Frontend** | HTML5, CSS3, Vanilla JavaScript (ES6+) |
+| **Backend** | Node.js, Express.js |
+| **Database** | MongoDB Atlas with Mongoose ODM |
+| **Authentication** | Firebase Authentication |
+| **AI Integration** | OpenAI API (GPT-4o-mini) |
+| **Sports Data** | The Odds API |
+
+---
+
+## Architecture
 
 ```
-daproject/
-├── index.html              # landing page
-├── timeline.html           # social feed with posts and live stream
-├── betting.html            # betting markets and bet slip
-├── account.html            # user profile and wallet
-├── settings.html           # user settings page
-├── admin.html              # admin moderation panel
-├── about.html              # about page
-├── contact.html            # contact page
-├── styles.css              # main stylesheet
-├── script.js               # auth and account functionality
-├── timeline.js             # posts, search, dm, live stream
-├── betting.js              # markets, bets, rob ai chat
-├── settings.js             # settings page logic
-├── server.js               # express backend api
-├── models/                 # mongoose database models
-│   ├── User.js
-│   ├── Post.js
-│   ├── Bet.js
-│   ├── Message.js
-│   ├── Settings.js
-│   ├── Withdrawal.js
-│   ├── PasswordReset.js
-│   ├── RobSuggestion.js
-│   ├── RobMessage.js
-│   └── index.js
-├── package.json            # node dependencies
-├── .env                    # environment variables
-└── images/                 # image assets
+├── Frontend (Static HTML/JS)
+│   ├── index.html          # Landing page & authentication
+│   ├── timeline.html       # Social feed & live streams
+│   ├── betting.html        # Markets & bet slip
+│   ├── account.html        # Profile & wallet
+│   ├── settings.html       # User preferences
+│   └── admin.html          # Administration panel
+│
+├── Backend (Express.js)
+│   └── server.js           # REST API (60+ endpoints)
+│
+└── Database (MongoDB Atlas)
+    ├── Users               # Profiles, balances, social graphs
+    ├── Posts               # Feed content with engagement
+    ├── Bets                # Wager records & settlements
+    ├── Messages            # Direct message threads
+    ├── Settings            # User preferences
+    ├── Withdrawals         # Payout requests
+    ├── RobSuggestions      # AI-generated picks
+    └── RobMessages         # Chat history
 ```
 
-## 🛠️ Technology Stack
+---
 
-### Frontend
-- html5/css3 with modern responsive design
-- vanilla javascript (es6 modules)
-- firebase sdk for authentication
-
-### Backend
-- node.js with express.js
-- mongodb atlas with mongoose odm
-- openai api for ai chat features
-- the odds api for real-time sports odds
-
-### Database Models
-- User - profiles, balances, followers
-- Post - social posts with likes/comments
-- Bet - betting records with settlement
-- Message - direct messages between users
-- Settings - user preferences
-- Withdrawal - withdrawal requests
-- PasswordReset - reset tokens
-- RobSuggestion - ai betting picks
-- RobMessage - rob chat history
-
-## 📦 Installation & Setup
+## Getting Started
 
 ### Prerequisites
-- node.js (v18 or higher)
-- mongodb atlas account
-- firebase project
-- openai api key (optional, for ai features)
-- the odds api key (optional, for live odds)
+- Node.js v18 or higher
+- MongoDB Atlas account
+- Firebase project with Authentication enabled
+- OpenAI API key *(optional — enables AI features)*
+- The Odds API key *(optional — enables live odds)*
 
-### Step 1: Install Dependencies
-```bash
-npm install
-```
+### Installation
 
-### Step 2: Configure Environment Variables
-Create a `.env` file:
-```
-MONGODB_URI=your_mongodb_connection_string
-OPENAI_API_KEY=your_openai_api_key
-ODDS_API_KEY=your_odds_api_key
-```
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd daproject
+   ```
 
-### Step 3: Start the Server
-```bash
-npm run dev
-```
-The app runs on http://localhost:3000
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-## 🔐 Admin Access
-- url: /admin.html
-- username: admin
-- password: payday2024!
+3. **Configure environment variables**
+   
+   Create a `.env` file in the project root:
+   ```env
+   MONGODB_URI=your_mongodb_connection_string
+   OPENAI_API_KEY=your_openai_api_key
+   ODDS_API_KEY=your_odds_api_key
+   ```
 
-## 📋 Functional Requirements (28/28 Complete)
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
 
-| # | Requirement | Status |
-|---|-------------|--------|
-| 1 | user signup with email/password | ✅ |
-| 2 | user login/logout | ✅ |
-| 3 | profile management | ✅ |
-| 4 | follow/unfollow users | ✅ |
-| 5 | change email/password | ✅ |
-| 6 | delete account with data purge | ✅ |
-| 7 | view betting markets with odds | ✅ |
-| 8 | place single bets | ✅ |
-| 9 | place parlay bets | ✅ |
-| 10 | cancel pending bets | ✅ |
-| 11 | live stream viewing | ✅ |
-| 12 | virtual wallet (add funds) | ✅ |
-| 13 | withdrawal requests | ✅ |
-| 14 | create posts with text/media | ✅ |
-| 15 | like/comment on posts | ✅ |
-| 16 | share posts | ✅ |
-| 17 | automated bet settlement | ✅ |
-| 18 | rob ai betting suggestions | ✅ |
-| 19 | rob ai chat assistant | ✅ |
-| 20 | search users/posts | ✅ |
-| 21 | transaction history | ✅ |
-| 22 | player/team statistics | ✅ |
-| 23 | direct messaging | ✅ |
-| 24 | settings page | ✅ |
-| 25 | password reset via email | ✅ |
-| 26 | real-time odds from api | ✅ |
-| 27 | admin moderation panel | ✅ |
-| 28 | help/legal/age verification | ✅ |
+5. **Access the application**
+   
+   Open http://localhost:3000 in your browser.
 
-##  License
+---
 
-This project is for educational purposes as part of a senior project.
+## API Overview
 
-## 👥 Contributors
+The backend exposes a RESTful API organized into the following domains:
 
-Senior Project Team - California State University, Fullerton
+| Domain | Endpoints | Description |
+|--------|-----------|-------------|
+| Authentication | `/api/auth/*` | Password reset, token verification |
+| Users | `/api/users/*` | Profiles, balances, follows, settings |
+| Posts | `/api/posts/*` | CRUD operations, likes, comments |
+| Betting | `/api/bets/*`, `/api/markets` | Markets, wagers, cancellations |
+| Rob AI | `/api/rob/*`, `/api/chat` | Chat, suggestions |
+| Messaging | `/api/messages/*` | Conversations, DMs |
+| Admin | `/api/admin/*` | Moderation, settlement |
+
+---
+
+## Disclaimer
+
+Pay Day is a **simulated betting platform** developed for educational purposes. All currency is virtual and holds no real-world monetary value. Users must be 21 years or older to access betting features.
+
+If you or someone you know has a gambling problem, please contact the National Council on Problem Gambling at **1-800-522-4700**.
+
+---
+
+## License
+
+This project was developed as part of an academic senior project and is intended for educational purposes only.
+
+---
+
+## Contributors
+
+**Senior Project Team**  
+California State University, Fullerton
